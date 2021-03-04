@@ -9,6 +9,7 @@ public class OrderDetails {
 	private double total;
 	private String productId;
 	private int amount;
+	private String reservationId;
 	
 	public OrderDetails(String creditCardNumber, double total, String productId, int amount) {
 		this.creditCardNumber = creditCardNumber;
@@ -30,6 +31,10 @@ public class OrderDetails {
 
 	public String getProductId() {
 		return productId;
+	}
+	
+	public String getReservationId() {
+		return reservationId;
 	}
 
 	public int getAmount() {

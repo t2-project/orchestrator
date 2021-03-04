@@ -1,6 +1,11 @@
 package de.unistuttgart.t2.orchestrator.saga;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.unistuttgart.t2.common.commands.CheckCreditCommand;
+import de.unistuttgart.t2.common.commands.CommitReservationCommand;
 import de.unistuttgart.t2.common.commands.CreateOrderCommand;
 import de.unistuttgart.t2.common.commands.DecreaseInventoryCommand;
 import de.unistuttgart.t2.common.commands.RejectOrderCommand;
@@ -14,6 +19,8 @@ import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
 
 public class Saga implements SimpleSaga<SagaData> {
 
+    Logger logger = LoggerFactory.getLogger(Saga.class);
+	
 	@Override
 	public SagaDefinition<SagaData> getSagaDefinition() {
 		// TODO Auto-generated method stub
@@ -24,15 +31,14 @@ public class Saga implements SimpleSaga<SagaData> {
 			step()
 				.invokeParticipant(this::actionOrder)
 				.onReply(OrderCreated.class, this::onReplayOrder)
-				.onReply(OrderCreated.class, (a, b) -> System.err.println("order replied"))
+				.onReply(OrderCreated.class, (a, b) -> logger.debug("order replied"))
 				.withCompensation(this::compensationOrder)
 			.step()
-				.invokeParticipant(this::actionInventory)
-				.onReply(Success.class, (a, b) -> System.err.println("inventory replied"))
-				.withCompensation(this::compensationInventory).
-			step()
 				.invokeParticipant(this::actionPayment)
-				.onReply(Success.class, (a, b) -> System.err.println("payment replied"))
+				.onReply(Success.class, (a, b) -> logger.debug("payment replied"))
+			.step()
+				.invokeParticipant(this::actionInventory)
+				.onReply(Success.class, (a, b) -> logger.debug("inventory replied"))
 			.build();
 
 	/*
@@ -47,7 +53,7 @@ public class Saga implements SimpleSaga<SagaData> {
 	 */
 	private CommandWithDestination actionOrder(SagaData data) {
 		
-		System.err.println("action order"); // TODO DELETE
+		logger.debug("action order"); // TODO DELETE
 		
 		String productId = data.getDetails().getProductId();
 		int amount = data.getDetails().getAmount();
@@ -65,7 +71,7 @@ public class Saga implements SimpleSaga<SagaData> {
 	 */
 	private CommandWithDestination compensationOrder(SagaData data) {
 		// TODO
-		System.err.println("compensation order");
+		logger.debug("compensation order");
 		
 		String orderId = data.getOrderId();
 		
@@ -83,36 +89,18 @@ public class Saga implements SimpleSaga<SagaData> {
 	}
 
 	/**
-	 * create command that triggers inventory Service to decrease amount of given product
+	 * create command that triggers inventory Service to commit the reserved amount of products.
 	 * 
 	 * @param data
 	 * @return
 	 */
 	private CommandWithDestination actionInventory(SagaData data) {
 		
-		System.err.println("compensation inventory"); // TODO DELETE
+		logger.debug("action inventory"); // TODO DELETE
 		
-		String productId = data.getDetails().getProductId();
-		int amount = data.getDetails().getAmount();
+		String id = data.getDetails().getProductId(); 
 		
-		return CommandWithDestinationBuilder.send(new DecreaseInventoryCommand(amount, productId))
-				.to(DecreaseInventoryCommand.channel).build();
-	}
-
-	/**
-	 * create command that triggers inventory Service to reincrease amount of given product
-	 * 
-	 * @param data
-	 * @return
-	 */
-	private CommandWithDestination compensationInventory(SagaData data) {
-		
-		System.err.println("compensation inventory"); // TODO DELETE
-		
-		String productId = data.getDetails().getProductId();
-		int amount = data.getDetails().getAmount();
-		
-		return CommandWithDestinationBuilder.send(new DecreaseInventoryCommand(amount, productId))
+		return CommandWithDestinationBuilder.send(new CommitReservationCommand(id))
 				.to(DecreaseInventoryCommand.channel).build();
 	}
 
@@ -124,7 +112,7 @@ public class Saga implements SimpleSaga<SagaData> {
 	 */
 	private CommandWithDestination actionPayment(SagaData data) {
 		
-		System.err.println("action payment"); //DELETE
+		logger.debug("action payment"); //DELETE
 		
 		String creditCardNumber = data.getDetails().getCreditCardNumber();
 		double total = data.getDetails().getTotal();
