@@ -30,8 +30,8 @@ public class OrchestratorApplication {
 	}	
 
 	@Bean
-	public Service orderService(SagaInstanceFactory sagaInstanceFactory, Saga saga) {
-		return new Service(sagaInstanceFactory, saga);
+	public OrchestratorService orderService(SagaInstanceFactory sagaInstanceFactory, Saga saga) {
+		return new OrchestratorService(sagaInstanceFactory, saga);
 	}
 
 	@Bean

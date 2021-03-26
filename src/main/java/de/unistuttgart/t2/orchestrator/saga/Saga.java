@@ -1,14 +1,15 @@
 package de.unistuttgart.t2.orchestrator.saga;
 
 
+import java.time.Instant;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.unistuttgart.t2.common.commands.CheckCreditCommand;
-import de.unistuttgart.t2.common.commands.CommitReservationCommand;
-import de.unistuttgart.t2.common.commands.CreateOrderCommand;
-import de.unistuttgart.t2.common.commands.DecreaseInventoryCommand;
-import de.unistuttgart.t2.common.commands.RejectOrderCommand;
+import de.unistuttgart.t2.common.commands.inventory.*;
+import de.unistuttgart.t2.common.commands.order.*;
+import de.unistuttgart.t2.common.commands.payment.*;
 import de.unistuttgart.t2.common.replies.OrderCreated;
 import io.eventuate.tram.commands.common.Success;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
@@ -34,15 +35,15 @@ public class Saga implements SimpleSaga<SagaData> {
 				.onReply(OrderCreated.class, (a, b) -> logger.debug("order replied"))
 				.withCompensation(this::compensationOrder)
 			.step()
-				.invokeParticipant(this::actionPayment)
-				.onReply(Success.class, (a, b) -> logger.debug("payment replied"))
-			.step()
 				.invokeParticipant(this::actionInventory)
 				.onReply(Success.class, (a, b) -> logger.debug("inventory replied"))
+			.step()
+				.invokeParticipant(this::actionPayment)
+				.onReply(Success.class, (a, b) -> logger.debug("payment replied"))
 			.build();
 
 	/*
-	 * actions and rollbacks
+	 * actions and compensations
 	 */
 
 	/**
@@ -55,12 +56,12 @@ public class Saga implements SimpleSaga<SagaData> {
 		
 		logger.debug("action order"); // TODO DELETE
 		
-		String productId = data.getDetails().getProductId();
-		int amount = data.getDetails().getAmount();
-		double total = data.getDetails().getTotal();
+		String sessionId = data.getSessionId();
+		Date timestamp = Date.from(Instant.now());
+		logger.debug("now : " + timestamp.toString());
 		
-		return CommandWithDestinationBuilder.send(new CreateOrderCommand(total, productId, amount))
-				.to(CreateOrderCommand.channel).build();
+		return CommandWithDestinationBuilder.send(new OrderAction(sessionId, timestamp))
+				.to(OrderAction.channel).build();
 	}
 
 	/**
@@ -75,8 +76,8 @@ public class Saga implements SimpleSaga<SagaData> {
 		
 		String orderId = data.getOrderId();
 		
-		return CommandWithDestinationBuilder.send(new RejectOrderCommand(orderId))
-				.to(RejectOrderCommand.channel).build();
+		return CommandWithDestinationBuilder.send(new OrderCompensation(orderId))
+				.to(OrderCompensation.channel).build();
 	}
 
 	/**
@@ -97,11 +98,17 @@ public class Saga implements SimpleSaga<SagaData> {
 	private CommandWithDestination actionInventory(SagaData data) {
 		
 		logger.debug("action inventory"); // TODO DELETE
+				
+		return CommandWithDestinationBuilder.send(new InventoryAction())
+				.to(InventoryCommand.channel).build();
+	}
+	
+	private CommandWithDestination compensationInventory(SagaData data) {
+		// TODO
+		logger.debug("compensation inventory");
 		
-		String id = data.getDetails().getProductId(); 
-		
-		return CommandWithDestinationBuilder.send(new CommitReservationCommand(id))
-				.to(DecreaseInventoryCommand.channel).build();
+		return CommandWithDestinationBuilder.send(new InventoryCompensation())
+				.to(InventoryCommand.channel).build();
 	}
 
 	/**
@@ -111,12 +118,9 @@ public class Saga implements SimpleSaga<SagaData> {
 	 * @return
 	 */
 	private CommandWithDestination actionPayment(SagaData data) {
-		
 		logger.debug("action payment"); //DELETE
 		
-		String creditCardNumber = data.getDetails().getCreditCardNumber();
-		double total = data.getDetails().getTotal();
-		return CommandWithDestinationBuilder.send(new CheckCreditCommand(total, creditCardNumber)).to(CheckCreditCommand.channel).build();
+		return CommandWithDestinationBuilder.send(new PaymentAction(data.getSessionId())).to(PaymentAction.channel).build();
 	}
 
 	/*
