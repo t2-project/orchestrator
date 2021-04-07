@@ -22,13 +22,22 @@ public class Saga implements SimpleSaga<SagaData> {
 		return this.sagaDefinition;
 	}
 
-	private SagaDefinition<SagaData> sagaDefinition = step().invokeParticipant(this::actionOrder)
-			.onReply(OrderCreated.class, this::onReplayOrder)
-			.onReply(OrderCreated.class, (a, b) -> logger.debug("order replied"))
-			.withCompensation(this::compensationOrder).step().invokeParticipant(this::actionInventory)
-			.onReply(Success.class, (a, b) -> logger.debug("inventory replied"))
-			.withCompensation(this::compensationInventory).step().invokeParticipant(this::actionPayment)
-			.onReply(Success.class, (a, b) -> logger.debug("payment replied")).build();
+	private SagaDefinition<SagaData> sagaDefinition = 
+			step()
+				.invokeParticipant(this::actionOrder)
+				.onReply(OrderCreated.class, this::onReplayOrder)
+				.onReply(Success.class, this::onReplayOrderSuccess)
+				.onReply(Success.class, (a, b) -> logger.debug("order replied"))
+				.withCompensation(this::compensationOrder)
+			.step()
+				.withCompensation(this::compensationInventory)
+			.step()
+				.invokeParticipant(this::actionPayment)
+				.onReply(Success.class, (a, b) -> logger.debug("payment replied"))
+			.step()
+				.invokeParticipant(this::actionInventory)
+				.onReply(Success.class, (a, b) -> logger.debug("inventory replied"))
+			.build();
 
 	/*
 	 * actions and compensations
@@ -61,6 +70,15 @@ public class Saga implements SimpleSaga<SagaData> {
 	 */
 	private void onReplayOrder(SagaData data, OrderCreated reply) {
 		data.setOrderId(reply.getId());
+	}
+	
+	/**
+	 * 
+	 * @param data
+	 * @param reply
+	 */
+	private void onReplayOrderSuccess(SagaData data, Success reply) {
+		data.setOrderId("success");
 	}
 
 	/**
@@ -98,6 +116,6 @@ public class Saga implements SimpleSaga<SagaData> {
 	/*
 	 * failure handlers
 	 */
-	// TODO
+	// TODO Maybe?
 
 }

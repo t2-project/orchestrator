@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.unistuttgart.t2.common.domain.saga.CreditCardInfo;
 import de.unistuttgart.t2.common.domain.saga.SagaData;
 import de.unistuttgart.t2.common.domain.saga.SagaRequest;
 
@@ -29,14 +28,13 @@ public class OrchestratorController {
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	@PostMapping(value = "/order")
 	public void createOrder(@RequestBody SagaRequest request) {
-		LOG.info("received order request for session %s", request.getSessionId());
+		LOG.info(String.format("received order request for session %s", request.getSessionId()));
 
 		assertRequest(request);
 		
 		// form data
-		CreditCardInfo card = new CreditCardInfo(request.getCardNumber(), request.getCardOwner(),
-				request.getChecksum());
-		SagaData data = new SagaData(card, request.getSessionId(), request.getTotal());
+		SagaData data = new SagaData(request.getCardNumber(), request.getCardOwner(),
+				request.getChecksum(), request.getSessionId(), request.getTotal());
 
 		// start saga
 		service.createSaga(data);
