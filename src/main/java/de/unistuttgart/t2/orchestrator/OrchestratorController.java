@@ -18,12 +18,8 @@ public class OrchestratorController {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	private OrchestratorService service;
-
-	@Autowired // HÄ??? What the fuck am i doing here???
-	public OrchestratorController(OrchestratorService service) {
-		this.service = service;
-	}
+	@Autowired 
+	OrchestratorService service;
 
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	@PostMapping(value = "/order")

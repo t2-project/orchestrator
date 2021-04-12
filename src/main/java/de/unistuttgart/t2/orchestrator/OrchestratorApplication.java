@@ -11,17 +11,14 @@ import de.unistuttgart.t2.orchestrator.saga.Saga;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 import io.eventuate.tram.sagas.spring.orchestration.SagaOrchestratorConfiguration;
 import io.eventuate.tram.spring.consumer.kafka.EventuateTramKafkaMessageConsumerConfiguration;
-//import io.eventuate.tram.consumer.rabbitmq.EventuateTramRabbitMQMessageConsumerConfiguration;
 import io.eventuate.tram.spring.messaging.producer.jdbc.TramMessageProducerJdbcConfiguration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableAutoConfiguration
-//@Import(//, OptimisticLockingDecoratorConfiguration.class})
 @Import({ TramMessageProducerJdbcConfiguration.class, 
 		EventuateTramKafkaMessageConsumerConfiguration.class,
-		//EventuateTramRabbitMQMessageConsumerConfiguration.class,
 		SagaOrchestratorConfiguration.class })
 public class OrchestratorApplication {
 
