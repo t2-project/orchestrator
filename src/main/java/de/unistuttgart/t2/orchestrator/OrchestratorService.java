@@ -3,7 +3,7 @@ package de.unistuttgart.t2.orchestrator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.unistuttgart.t2.common.domain.saga.SagaData;
+import de.unistuttgart.t2.common.saga.SagaData;
 import de.unistuttgart.t2.orchestrator.saga.Saga;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 

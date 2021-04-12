@@ -3,9 +3,9 @@ package de.unistuttgart.t2.orchestrator.saga;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.unistuttgart.t2.common.commands.*;
-import de.unistuttgart.t2.common.domain.saga.SagaData;
-import de.unistuttgart.t2.common.replies.OrderCreated;
+import de.unistuttgart.t2.common.saga.OrderCreatedReply;
+import de.unistuttgart.t2.common.saga.SagaData;
+import de.unistuttgart.t2.common.saga.commands.*;
 import io.eventuate.tram.commands.common.Success;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 import io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder;
@@ -25,7 +25,7 @@ public class Saga implements SimpleSaga<SagaData> {
 	private SagaDefinition<SagaData> sagaDefinition = 
 			step()
 				.invokeParticipant(this::actionOrder)
-				.onReply(OrderCreated.class, this::onReplayOrder)
+				.onReply(OrderCreatedReply.class, this::onReplayOrder)
 				.onReply(Success.class, this::onReplayOrderSuccess)
 				.onReply(Success.class, (a, b) -> logger.debug("order replied"))
 				.withCompensation(this::compensationOrder)
@@ -68,7 +68,7 @@ public class Saga implements SimpleSaga<SagaData> {
 	 * @param data
 	 * @param reply
 	 */
-	private void onReplayOrder(SagaData data, OrderCreated reply) {
+	private void onReplayOrder(SagaData data, OrderCreatedReply reply) {
 		data.setOrderId(reply.getId());
 	}
 	
