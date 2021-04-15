@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,11 +27,9 @@ public class OrchestratorController {
 
 		assertRequest(request);
 		
-		// form data
 		SagaData data = new SagaData(request.getCardNumber(), request.getCardOwner(),
 				request.getChecksum(), request.getSessionId(), request.getTotal());
 
-		// start saga
 		service.createSaga(data);
 	}
 
@@ -43,7 +40,7 @@ public class OrchestratorController {
 			   || request.getChecksum() == null || request.getChecksum().isEmpty()
 			   || request.getSessionId() == null  || request.getSessionId().isEmpty()
 			   || request.getTotal() < 0) {
-		   throw new IllegalArgumentException();
+		   throw new IllegalArgumentException("illegal saga request : " + request.toString());
 	   }
    }
 }
