@@ -103,9 +103,6 @@
 			<version>0.24.0.RELEASE</version>
 		</dependency>
 
-
-
-
 		<!-- https://mvnrepository.com/artifact/io.eventuate.tram.sagas/eventuate-tram-sagas-spring-orchestration -->
 		<dependency>
 			<groupId>io.eventuate.tram.sagas</groupId>
@@ -118,6 +115,14 @@
 			<artifactId>eventuate-tram-sagas-spring-orchestration-simple-dsl</artifactId>
 			<version>0.15.2.RELEASE</version>
 		</dependency>
+
+        <!-- tracing/monitoring -->
+        <dependency>
+	        <groupId>io.opentracing.contrib</groupId>
+		    <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
+    		<version>3.2.0</version>
+	    </dependency>
+
 
 		<!-- common things -->
 		<dependency>
