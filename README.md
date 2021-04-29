@@ -7,7 +7,7 @@ orchestrates the saga.
 ## application properies
 
 properties for the CDC.
-c.f. (eventuate tram cdc)[https://eventuate.io/docs/manual/eventuate-tram/latest/getting-started-eventuate-tram.html] for explanations.
+c.f. [eventuate tram cdc](https://eventuate.io/docs/manual/eventuate-tram/latest/getting-started-eventuate-tram.html) for explanations.
 
 property | read from env var | description |
 -------- | ----------------- | ----------- |
