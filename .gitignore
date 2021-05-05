@@ -35,3 +35,5 @@ build/
 bin/
 **/*.swp
 **/*.log
+
+**/resources/*local*
