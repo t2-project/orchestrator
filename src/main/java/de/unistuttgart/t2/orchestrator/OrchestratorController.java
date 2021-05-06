@@ -16,13 +16,13 @@ import de.unistuttgart.t2.common.saga.SagaRequest;
 public class OrchestratorController {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-
+	
 	@Autowired 
 	OrchestratorService service;
 
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	@PostMapping(value = "/order")
-	public void createOrder(@RequestBody SagaRequest request) {
+	public String createOrder(@RequestBody SagaRequest request) {
 		LOG.info(String.format("received order request for session %s", request.getSessionId()));
 
 		assertRequest(request);
@@ -30,7 +30,7 @@ public class OrchestratorController {
 		SagaData data = new SagaData(request.getCardNumber(), request.getCardOwner(),
 				request.getChecksum(), request.getSessionId(), request.getTotal());
 
-		service.createSaga(data);
+		return service.createSaga(data);
 	}
 
 	private void assertRequest(SagaRequest request) {

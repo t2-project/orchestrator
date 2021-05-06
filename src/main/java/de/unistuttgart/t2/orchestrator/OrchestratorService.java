@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.unistuttgart.t2.common.saga.SagaData;
 import de.unistuttgart.t2.orchestrator.saga.Saga;
+import io.eventuate.tram.sagas.orchestration.SagaInstance;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 
 public class OrchestratorService {
@@ -26,7 +27,7 @@ public class OrchestratorService {
 	 * @param details
 	 */
 	@Transactional
-	protected void createSaga(SagaData data) {
-		sagaInstanceFactory.create(saga, data);
+	protected String createSaga(SagaData data) {
+		return sagaInstanceFactory.create(saga, data).getId();
 	}
 }

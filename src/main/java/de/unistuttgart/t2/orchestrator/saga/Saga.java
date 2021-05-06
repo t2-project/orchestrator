@@ -27,16 +27,16 @@ public class Saga implements SimpleSaga<SagaData> {
 				.invokeParticipant(this::actionOrder)
 				.onReply(OrderCreatedReply.class, this::onReplayOrder)
 				.onReply(Success.class, this::onReplayOrderSuccess)
-				.onReply(Success.class, (a, b) -> logger.debug("order replied"))
+				.onReply(Success.class, (a, b) -> logger.info("order replied"))
 				.withCompensation(this::compensationOrder)
 			.step()
 				.withCompensation(this::compensationInventory)
 			.step()
 				.invokeParticipant(this::actionPayment)
-				.onReply(Success.class, (a, b) -> logger.debug("payment replied"))
+				.onReply(Success.class, (a, b) -> logger.info("payment replied"))
 			.step()
 				.invokeParticipant(this::actionInventory)
-				.onReply(Success.class, (a, b) -> logger.debug("inventory replied"))
+				.onReply(Success.class, (a, b) -> logger.info("inventory replied"))
 			.build();
 
 	/*
