@@ -28,22 +28,9 @@ public class OrchestratorApplication {
 		SpringApplication.run(OrchestratorApplication.class, args);
 	}	
 
-	@Profile("!test")
 	@Bean
 	public OrchestratorService orderService(SagaInstanceFactory sagaInstanceFactory, Saga saga) {
 		return new OrchestratorService(sagaInstanceFactory, saga);
-	}
-	
-	@Profile("test")
-    @Bean
-    public OrchestratorService testOrderService(SagaInstanceFactory sagaInstanceFactory, Saga saga) {
-        return new TestOrchestratorService(sagaInstanceFactory, saga);
-    }
-	
-	@Profile("test")
-    @Bean
-    public RestTemplate restTemplate() {
-	    return new RestTemplate();
 	}
 
 	@Bean
