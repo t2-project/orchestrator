@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Profile;
 
 import de.unistuttgart.t2.orchestrator.saga.Saga;
 
@@ -14,14 +13,16 @@ import io.eventuate.tram.sagas.spring.orchestration.SagaOrchestratorConfiguratio
 import io.eventuate.tram.spring.consumer.kafka.EventuateTramKafkaMessageConsumerConfiguration;
 import io.eventuate.tram.spring.messaging.producer.jdbc.TramMessageProducerJdbcConfiguration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.client.RestTemplate;
+
+import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
+
 
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableAutoConfiguration
 @Import({ TramMessageProducerJdbcConfiguration.class, 
 		EventuateTramKafkaMessageConsumerConfiguration.class,
-		SagaOrchestratorConfiguration.class })
+		SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class })
 public class OrchestratorApplication {
 
 	public static void main(String[] args) {

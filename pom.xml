@@ -15,40 +15,17 @@
 	<name>orchestrator</name>
 	<description>saga orchestrator of t2</description>
 
-	<repositories>
-		<repository>
-			<id>eventuate-tram-repos</id>
-			<name>eventuate-tram-repos</name>
-			<url>https://jcenter.bintray.com/</url>
-		</repository>
-	</repositories>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-amqp</artifactId>
-		</dependency>
 
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
+    	<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.amqp</groupId>
-			<artifactId>spring-rabbit-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
 
 		<!-- for saga instance repo -->
 		<dependency>
@@ -62,65 +39,64 @@
 		<dependency>
 			<groupId>io.eventuate.tram.core</groupId>
 			<artifactId>eventuate-tram-spring-events</artifactId>
-			<version>0.26.1.RELEASE</version>
+			<version>${TRAM_VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.eventuate.tram.core</groupId>
 			<artifactId>eventuate-tram-spring-commands</artifactId>
-			<version>0.26.1.RELEASE</version>
+			<version>${TRAM_VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.eventuate.tram.core</groupId>
 			<artifactId>eventuate-tram-spring-messaging</artifactId>
-			<version>0.26.1.RELEASE</version>
+			<version>${TRAM_VERSION}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-spring-producer-jdbc -->
 		<dependency>
 			<groupId>io.eventuate.tram.core</groupId>
 			<artifactId>eventuate-tram-spring-producer-jdbc</artifactId>
-			<version>0.26.1.RELEASE</version>
+			<version>${TRAM_VERSION}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-spring-consumer-jdbc -->
 		<dependency>
 			<groupId>io.eventuate.tram.core</groupId>
 			<artifactId>eventuate-tram-spring-consumer-jdbc</artifactId>
-			<version>0.26.1.RELEASE</version>
+			<version>${TRAM_VERSION}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-spring-consumer-kafka -->
 		<dependency>
 			<groupId>io.eventuate.tram.core</groupId>
 			<artifactId>eventuate-tram-spring-consumer-kafka</artifactId>
-			<version>0.24.0.RELEASE</version>
-		</dependency>
-
-		<!-- rabbit MQ ? -->
-		<!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-consumer-rabbitmq -->
-		<dependency>
-			<groupId>io.eventuate.tram.core</groupId>
-			<artifactId>eventuate-tram-consumer-rabbitmq</artifactId>
-			<version>0.24.0.RELEASE</version>
+			<version>${TRAM_VERSION}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/io.eventuate.tram.sagas/eventuate-tram-sagas-spring-orchestration -->
 		<dependency>
 			<groupId>io.eventuate.tram.sagas</groupId>
 			<artifactId>eventuate-tram-sagas-spring-orchestration</artifactId>
-			<version>0.15.2.RELEASE</version>
+			<version>${TRAM_PARTICIPANT_VERSION}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/io.eventuate.tram.sagas/eventuate-tram-sagas-spring-orchestration-simple-dsl -->
 		<dependency>
 			<groupId>io.eventuate.tram.sagas</groupId>
 			<artifactId>eventuate-tram-sagas-spring-orchestration-simple-dsl</artifactId>
-			<version>0.15.2.RELEASE</version>
+			<version>${TRAM_PARTICIPANT_VERSION}</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-spring-optimistic-locking -->
+		<dependency>
+			<groupId>io.eventuate.tram.core</groupId>
+			<artifactId>eventuate-tram-spring-optimistic-locking</artifactId>
+			<version>${TRAM_VERSION}</version>
 		</dependency>
 
         <!-- tracing/monitoring -->
         <dependency>
 	        <groupId>io.opentracing.contrib</groupId>
 		    <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
-    		<version>3.2.0</version>
+    		<version>${JAEGER_VERSION}</version>
 	    </dependency>
 
 
