@@ -17,6 +17,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
 
 
+/**
+ * Orchestrates distributed transactions according to the saga pattern.
+ * 
+ * @author maumau
+ *
+ */
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableAutoConfiguration

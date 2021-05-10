@@ -8,6 +8,12 @@ import de.unistuttgart.t2.orchestrator.saga.Saga;
 import io.eventuate.tram.sagas.orchestration.SagaInstance;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 
+/**
+ * Manages creation of new saga instances.
+ * 
+ * @author maumau
+ *
+ */
 public class OrchestratorService {
 
 	@Autowired
@@ -22,9 +28,10 @@ public class OrchestratorService {
 	}
 
 	/**
-	 * creates the actual saga.
-	 *  
-	 * @param details
+     * Creates a new saga instance.
+     * 
+	 * @param data informations to be passed to all participants
+	 * @return id of saga instance
 	 */
 	@Transactional
 	protected String createSaga(SagaData data) {

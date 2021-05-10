@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import de.unistuttgart.t2.common.saga.SagaData;
 import de.unistuttgart.t2.common.saga.SagaRequest;
 
+/**
+ * Defines the http enpoints of the orchestrator service.
+ * 
+ * @author maumau
+ *
+ */
 @RestController
 public class OrchestratorController {
 
@@ -20,6 +26,14 @@ public class OrchestratorController {
 	@Autowired 
 	OrchestratorService service;
 
+	/**
+	 * Starts a saga.
+	 * <p>
+	 * Replies as soon as the saga is created.
+	 * 
+	 * @param request request to start a saga
+	 * @return id of saga instance
+	 */
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	@PostMapping(value = "/order")
 	public String createOrder(@RequestBody SagaRequest request) {
@@ -33,6 +47,11 @@ public class OrchestratorController {
 		return service.createSaga(data);
 	}
 
+	/**
+	 * Assert that all information required for the saga are provided.
+	 * 
+	 * @param request request to start a saga
+	 */
 	private void assertRequest(SagaRequest request) {
 	   if (request == null 
 			   || request.getCardNumber() == null || request.getCardNumber().isEmpty() 
