@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.unistuttgart.t2.common.SagaRequest;
 import de.unistuttgart.t2.common.saga.SagaData;
-import de.unistuttgart.t2.common.saga.SagaRequest;
 
 /**
  * Defines the http enpoints of the orchestrator service.
