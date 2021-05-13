@@ -3,11 +3,11 @@
 This service is part of the T2 Store.
 It orchestrates the saga.
 
-See [LINK TO SPHINX DOCU](TODO) for more details on the saga.
+See the [Documentation](https://t2-documentation.readthedocs.io/en/latest/arch/arch.html#the-saga) for more details on the saga.
 
-## Build and Run Manually
+## Build and Run
 
-_**TODO: copy from Order was mangus checked it.**_
+Confer the [Documentation](https://t2-documentation.readthedocs.io/en/latest/guides/kube.html) on how to build, run or deploy the T2 Store services.
 
 ## HTTP Endpoints
 * ``/order`` POST here to start a saga 
