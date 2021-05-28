@@ -92,13 +92,18 @@
 			<version>${TRAM_VERSION}</version>
 		</dependency>
 
-        <!-- tracing/monitoring -->
+        <!-- tracing -->
         <dependency>
 	        <groupId>io.opentracing.contrib</groupId>
 		    <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
     		<version>${JAEGER_VERSION}</version>
 	    </dependency>
 
+        <!-- health -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 
 		<!-- common things -->
 		<dependency>
