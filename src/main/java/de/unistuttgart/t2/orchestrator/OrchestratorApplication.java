@@ -15,7 +15,9 @@ import io.eventuate.tram.spring.messaging.producer.jdbc.TramMessageProducerJdbcC
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
-
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 
 /**
  * Orchestrates distributed transactions according to the saga pattern.
@@ -26,14 +28,13 @@ import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConf
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableAutoConfiguration
-@Import({ TramMessageProducerJdbcConfiguration.class, 
-		EventuateTramKafkaMessageConsumerConfiguration.class,
+@Import({ TramMessageProducerJdbcConfiguration.class, EventuateTramKafkaMessageConsumerConfiguration.class,
 		SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class })
 public class OrchestratorApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(OrchestratorApplication.class, args);
-	}	
+	}
 
 	@Bean
 	public OrchestratorService orderService(SagaInstanceFactory sagaInstanceFactory, Saga saga) {
@@ -43,5 +44,11 @@ public class OrchestratorApplication {
 	@Bean
 	public Saga createSaga() {
 		return new Saga();
+	}
+
+	@Bean
+	public OpenAPI customOpenAPI() {
+		return new OpenAPI().components(new Components()).info(new Info().title("Orchestrator service API")
+				.description("API of the T2 Store's orchestrator service."));
 	}
 }
