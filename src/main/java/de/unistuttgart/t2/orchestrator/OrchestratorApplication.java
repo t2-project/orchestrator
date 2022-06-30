@@ -1,22 +1,18 @@
 package de.unistuttgart.t2.orchestrator;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.autoconfigure.*;
+import org.springframework.context.annotation.*;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import de.unistuttgart.t2.common.BaseScan;
 import de.unistuttgart.t2.orchestrator.saga.Saga;
-
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 import io.eventuate.tram.sagas.spring.orchestration.SagaOrchestratorConfiguration;
 import io.eventuate.tram.spring.consumer.kafka.EventuateTramKafkaMessageConsumerConfiguration;
 import io.eventuate.tram.spring.messaging.producer.jdbc.TramMessageProducerJdbcConfiguration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
 import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
-import io.swagger.v3.oas.models.Components;
-import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.*;
 import io.swagger.v3.oas.models.info.Info;
 
 /**
@@ -25,11 +21,12 @@ import io.swagger.v3.oas.models.info.Info;
  * @author maumau
  *
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackageClasses = BaseScan.class)
 @EnableJpaRepositories
 @EnableAutoConfiguration
-@Import({ TramMessageProducerJdbcConfiguration.class, EventuateTramKafkaMessageConsumerConfiguration.class,
-		SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class })
+@Import({	TramMessageProducerJdbcConfiguration.class,
+			EventuateTramKafkaMessageConsumerConfiguration.class,
+			SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class })
 public class OrchestratorApplication {
 
 	public static void main(String[] args) {
