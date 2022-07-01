@@ -17,35 +17,33 @@ import io.swagger.v3.oas.models.info.Info;
 
 /**
  * Orchestrates distributed transactions according to the saga pattern.
- * 
- * @author maumau
  *
+ * @author maumau
  */
 @SpringBootApplication(scanBasePackageClasses = BaseScan.class)
 @EnableJpaRepositories
 @EnableAutoConfiguration
-@Import({	TramMessageProducerJdbcConfiguration.class,
-			EventuateTramKafkaMessageConsumerConfiguration.class,
-			SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class })
+@Import({ TramMessageProducerJdbcConfiguration.class, EventuateTramKafkaMessageConsumerConfiguration.class,
+          SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class })
 public class OrchestratorApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(OrchestratorApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(OrchestratorApplication.class, args);
+    }
 
-	@Bean
-	public OrchestratorService orderService(SagaInstanceFactory sagaInstanceFactory, Saga saga) {
-		return new OrchestratorService(sagaInstanceFactory, saga);
-	}
+    @Bean
+    public OrchestratorService orderService(SagaInstanceFactory sagaInstanceFactory, Saga saga) {
+        return new OrchestratorService(sagaInstanceFactory, saga);
+    }
 
-	@Bean
-	public Saga createSaga() {
-		return new Saga();
-	}
+    @Bean
+    public Saga createSaga() {
+        return new Saga();
+    }
 
-	@Bean
-	public OpenAPI customOpenAPI() {
-		return new OpenAPI().components(new Components()).info(new Info().title("Orchestrator service API")
-				.description("API of the T2 Store's orchestrator service."));
-	}
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI().components(new Components()).info(new Info().title("Orchestrator service API")
+            .description("API of the T2 Store's orchestrator service."));
+    }
 }
