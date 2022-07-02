@@ -12,29 +12,28 @@ import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
  * Manages creation of new saga instances.
  * 
  * @author maumau
- *
  */
 public class OrchestratorService {
 
-	@Autowired
-	private SagaInstanceFactory sagaInstanceFactory;
+    @Autowired
+    private SagaInstanceFactory sagaInstanceFactory;
 
-	@Autowired
-	private Saga saga;
+    @Autowired
+    private Saga saga;
 
-	public OrchestratorService(SagaInstanceFactory sagaInstanceFactory, Saga saga) {
-		this.sagaInstanceFactory = sagaInstanceFactory;
-		this.saga = saga;
-	}
+    public OrchestratorService(SagaInstanceFactory sagaInstanceFactory, Saga saga) {
+        this.sagaInstanceFactory = sagaInstanceFactory;
+        this.saga = saga;
+    }
 
-	/**
+    /**
      * Creates a new saga instance.
      * 
-	 * @param data informations to be passed to all participants
-	 * @return id of saga instance
-	 */
-	@Transactional
-	protected String createSaga(SagaData data) {
-		return sagaInstanceFactory.create(saga, data).getId();
-	}
+     * @param data informations to be passed to all participants
+     * @return id of saga instance
+     */
+    @Transactional
+    protected String createSaga(SagaData data) {
+        return sagaInstanceFactory.create(saga, data).getId();
+    }
 }
