@@ -5,21 +5,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.unistuttgart.t2.common.saga.SagaData;
 import de.unistuttgart.t2.orchestrator.saga.Saga;
-import io.eventuate.tram.sagas.orchestration.SagaInstance;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 
 /**
  * Manages creation of new saga instances.
- * 
+ *
  * @author maumau
  */
 public class OrchestratorService {
 
     @Autowired
-    private SagaInstanceFactory sagaInstanceFactory;
+    private final SagaInstanceFactory sagaInstanceFactory;
 
     @Autowired
-    private Saga saga;
+    private final Saga saga;
 
     public OrchestratorService(SagaInstanceFactory sagaInstanceFactory, Saga saga) {
         this.sagaInstanceFactory = sagaInstanceFactory;
@@ -28,7 +27,7 @@ public class OrchestratorService {
 
     /**
      * Creates a new saga instance.
-     * 
+     *
      * @param data informations to be passed to all participants
      * @return id of saga instance
      */
