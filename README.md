@@ -1,13 +1,13 @@
 # Orchestrator Service 
 
-This service is part of the T2 Store.
+This service is part of the T2-Project.
 It orchestrates the saga.
 
 See the [Documentation](https://t2-documentation.readthedocs.io/en/latest/arch/arch.html#the-saga) for more details on the saga.
 
 ## Build and Run
 
-Confer the [Documentation](https://t2-documentation.readthedocs.io/en/latest/guides/kube.html) on how to build, run or deploy the T2 Store services.
+Confer the [Documentation](https://t2-documentation.readthedocs.io/en/latest/guides/kube.html) on how to build, run or deploy the T2-Project services.
 
 ## HTTP Endpoints
 * ``/order`` POST here to start a saga 

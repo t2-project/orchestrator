@@ -44,6 +44,6 @@ public class OrchestratorApplication {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI().components(new Components()).info(new Info().title("Orchestrator service API")
-            .description("API of the T2 Store's orchestrator service."));
+            .description("API of the T2-Project's orchestrator service."));
     }
 }
