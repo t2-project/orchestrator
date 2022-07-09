@@ -28,7 +28,7 @@ public class OrchestratorService {
     /**
      * Creates a new saga instance.
      *
-     * @param data informations to be passed to all participants
+     * @param data information to be passed to all participants
      * @return id of saga instance
      */
     @Transactional

@@ -25,7 +25,7 @@ curl -i -X POST -H "Content-Type:application/json" -d '{"cardNumber":"num","card
 ```
 
 
-## Application Properies
+## Application Properties
 
 Properties for the CDC.
 Confere [eventuate tram cdc](https://eventuate.io/docs/manual/eventuate-tram/latest/getting-started-eventuate-tram.html) for explanations.
