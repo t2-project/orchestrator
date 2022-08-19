@@ -1,11 +1,10 @@
 package de.unistuttgart.t2.orchestrator;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.*;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import de.unistuttgart.t2.common.BaseScan;
 import de.unistuttgart.t2.orchestrator.saga.Saga;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 import io.eventuate.tram.sagas.spring.orchestration.SagaOrchestratorConfiguration;
@@ -20,9 +19,8 @@ import io.swagger.v3.oas.models.info.Info;
  *
  * @author maumau
  */
-@SpringBootApplication(scanBasePackageClasses = { BaseScan.class, OrchestratorApplication.class })
+@SpringBootApplication
 @EnableJpaRepositories
-@EnableAutoConfiguration
 @Import({ TramMessageProducerJdbcConfiguration.class, EventuateTramKafkaMessageConsumerConfiguration.class,
           SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class })
 public class OrchestratorApplication {
