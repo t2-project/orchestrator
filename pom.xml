@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.4</version>
-		<relativePath /> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>de.unistuttgart.t2</groupId>
-	<artifactId>orchestrator</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>orchestrator</name>
-	<description>saga orchestrator of t2</description>
-	<properties>
-		<java.version>11</java.version>
-	</properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.4.4</version>
+        <relativePath /> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>de.unistuttgart.t2</groupId>
+    <artifactId>orchestrator</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>orchestrator</name>
+    <description>saga orchestrator of t2</description>
+    <properties>
+        <java.version>11</java.version>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -29,89 +27,89 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
 
-    	<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
-		<!-- for saga instance repo -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-		<!-- for openAPI and swagger -->
-		<dependency>
-    		<groupId>org.springdoc</groupId>
-    		<artifactId>springdoc-openapi-ui</artifactId>
-    		<version>${SPRINGDOC_VERSION}</version>
-		</dependency>
+        <!-- for saga instance repo -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
 
-		<!-- SAGA THINGS -->
-		<!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-spring-events -->
-		<dependency>
-			<groupId>io.eventuate.tram.core</groupId>
-			<artifactId>eventuate-tram-spring-events</artifactId>
-			<version>${TRAM_VERSION}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.eventuate.tram.core</groupId>
-			<artifactId>eventuate-tram-spring-commands</artifactId>
-			<version>${TRAM_VERSION}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.eventuate.tram.core</groupId>
-			<artifactId>eventuate-tram-spring-messaging</artifactId>
-			<version>${TRAM_VERSION}</version>
-		</dependency>
+        <!-- for openAPI and swagger -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${SPRINGDOC_VERSION}</version>
+        </dependency>
 
-		<!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-spring-producer-jdbc -->
-		<dependency>
-			<groupId>io.eventuate.tram.core</groupId>
-			<artifactId>eventuate-tram-spring-producer-jdbc</artifactId>
-			<version>${TRAM_VERSION}</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-spring-consumer-jdbc -->
-		<dependency>
-			<groupId>io.eventuate.tram.core</groupId>
-			<artifactId>eventuate-tram-spring-consumer-jdbc</artifactId>
-			<version>${TRAM_VERSION}</version>
-		</dependency>
+        <!-- SAGA THINGS -->
+        <!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-spring-events -->
+        <dependency>
+            <groupId>io.eventuate.tram.core</groupId>
+            <artifactId>eventuate-tram-spring-events</artifactId>
+            <version>${TRAM_VERSION}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.eventuate.tram.core</groupId>
+            <artifactId>eventuate-tram-spring-commands</artifactId>
+            <version>${TRAM_VERSION}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.eventuate.tram.core</groupId>
+            <artifactId>eventuate-tram-spring-messaging</artifactId>
+            <version>${TRAM_VERSION}</version>
+        </dependency>
 
-		<!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-spring-consumer-kafka -->
-		<dependency>
-			<groupId>io.eventuate.tram.core</groupId>
-			<artifactId>eventuate-tram-spring-consumer-kafka</artifactId>
-			<version>${TRAM_VERSION}</version>
-		</dependency>
+        <!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-spring-producer-jdbc -->
+        <dependency>
+            <groupId>io.eventuate.tram.core</groupId>
+            <artifactId>eventuate-tram-spring-producer-jdbc</artifactId>
+            <version>${TRAM_VERSION}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-spring-consumer-jdbc -->
+        <dependency>
+            <groupId>io.eventuate.tram.core</groupId>
+            <artifactId>eventuate-tram-spring-consumer-jdbc</artifactId>
+            <version>${TRAM_VERSION}</version>
+        </dependency>
 
-		<!-- https://mvnrepository.com/artifact/io.eventuate.tram.sagas/eventuate-tram-sagas-spring-orchestration -->
-		<dependency>
-			<groupId>io.eventuate.tram.sagas</groupId>
-			<artifactId>eventuate-tram-sagas-spring-orchestration</artifactId>
-			<version>${TRAM_PARTICIPANT_VERSION}</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/io.eventuate.tram.sagas/eventuate-tram-sagas-spring-orchestration-simple-dsl -->
-		<dependency>
-			<groupId>io.eventuate.tram.sagas</groupId>
-			<artifactId>eventuate-tram-sagas-spring-orchestration-simple-dsl</artifactId>
-			<version>${TRAM_PARTICIPANT_VERSION}</version>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-spring-optimistic-locking -->
-		<dependency>
-			<groupId>io.eventuate.tram.core</groupId>
-			<artifactId>eventuate-tram-spring-optimistic-locking</artifactId>
-			<version>${TRAM_VERSION}</version>
-		</dependency>
+        <!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-spring-consumer-kafka -->
+        <dependency>
+            <groupId>io.eventuate.tram.core</groupId>
+            <artifactId>eventuate-tram-spring-consumer-kafka</artifactId>
+            <version>${TRAM_VERSION}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.eventuate.tram.sagas/eventuate-tram-sagas-spring-orchestration -->
+        <dependency>
+            <groupId>io.eventuate.tram.sagas</groupId>
+            <artifactId>eventuate-tram-sagas-spring-orchestration</artifactId>
+            <version>${TRAM_PARTICIPANT_VERSION}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.eventuate.tram.sagas/eventuate-tram-sagas-spring-orchestration-simple-dsl -->
+        <dependency>
+            <groupId>io.eventuate.tram.sagas</groupId>
+            <artifactId>eventuate-tram-sagas-spring-orchestration-simple-dsl</artifactId>
+            <version>${TRAM_PARTICIPANT_VERSION}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-spring-optimistic-locking -->
+        <dependency>
+            <groupId>io.eventuate.tram.core</groupId>
+            <artifactId>eventuate-tram-spring-optimistic-locking</artifactId>
+            <version>${TRAM_VERSION}</version>
+        </dependency>
 
         <!-- tracing, monitoring, health -->
         <dependency>
@@ -127,33 +125,33 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-sleuth-zipkin</artifactId>
         </dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
 	    <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
-            <version>${MICROMETER_VERSION}</version>
         </dependency>
 
-		<!-- common things -->
-		<dependency>
-			<groupId>de.unistuttgart.t2</groupId>
-			<artifactId>common</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
+        <!-- common things -->
+        <dependency>
+            <groupId>de.unistuttgart.t2</groupId>
+            <artifactId>common</artifactId>
+            <version>${T2_COMMON_VERSION}</version>
+        </dependency>
 
 
-	</dependencies>
+    </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${JACOCO_VERSION}</version>
@@ -171,8 +169,8 @@
                         </goals>
                     </execution>
                 </executions>
-			</plugin>
-		</plugins>
-	</build>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

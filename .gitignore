@@ -37,3 +37,4 @@ bin/
 **/*.log
 
 **/resources/*local*
+/bin/
