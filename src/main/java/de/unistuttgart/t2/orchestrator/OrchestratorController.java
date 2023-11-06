@@ -36,7 +36,7 @@ public class OrchestratorController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping(value = "/order")
     public String createOrder(@RequestBody SagaRequest request) {
-        LOG.info(String.format("received order request for session %s", request.getSessionId()));
+        LOG.info("received order request for session {}", request.getSessionId());
 
         assertRequest(request);
 
