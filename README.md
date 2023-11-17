@@ -3,11 +3,11 @@
 This service is part of the T2-Project.
 It orchestrates the saga.
 
-See the [Documentation](https://t2-documentation.readthedocs.io/en/latest/arch/arch.html#the-saga) for more details on the saga.
+See the [Documentation](https://t2-documentation.readthedocs.io/en/latest/microservices/arch.html#the-saga) for more details on the saga.
 
 ## Build and Run
 
-Refer to the [Documentation](https://t2-documentation.readthedocs.io/en/latest/guides/deploy.html) on how to build, run or deploy the T2-Project services.
+Refer to the [Documentation](https://t2-documentation.readthedocs.io/en/latest/microservices/deploy.html) on how to build, run or deploy the T2-Project services.
 
 ## HTTP Endpoints
 
