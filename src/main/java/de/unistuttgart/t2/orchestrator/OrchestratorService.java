@@ -1,11 +1,10 @@
 package de.unistuttgart.t2.orchestrator;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-
 import de.unistuttgart.t2.common.saga.SagaData;
 import de.unistuttgart.t2.orchestrator.saga.Saga;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Manages creation of new saga instances.
@@ -32,7 +31,7 @@ public class OrchestratorService {
      * @return id of saga instance
      */
     @Transactional
-    protected String createSaga(SagaData data) {
+    public String createSaga(SagaData data) {
         return sagaInstanceFactory.create(saga, data).getId();
     }
 }

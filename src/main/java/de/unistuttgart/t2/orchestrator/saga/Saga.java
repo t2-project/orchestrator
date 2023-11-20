@@ -1,16 +1,17 @@
 package de.unistuttgart.t2.orchestrator.saga;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.unistuttgart.t2.common.saga.OrderCreatedReply;
 import de.unistuttgart.t2.common.saga.SagaData;
-import de.unistuttgart.t2.common.saga.commands.*;
+import de.unistuttgart.t2.common.saga.commands.ActionCommand;
+import de.unistuttgart.t2.common.saga.commands.CompensationCommand;
+import de.unistuttgart.t2.common.saga.commands.SagaCommand;
 import io.eventuate.tram.commands.common.Success;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 import io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder;
 import io.eventuate.tram.sagas.orchestration.SagaDefinition;
 import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Definition of the saga.
@@ -27,7 +28,7 @@ import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
  */
 public class Saga implements SimpleSaga<SagaData> {
 
-    private Logger logger = LoggerFactory.getLogger(Saga.class);
+    private final Logger LOG = LoggerFactory.getLogger(Saga.class);
 
     @Override
     public SagaDefinition<SagaData> getSagaDefinition() {
@@ -36,10 +37,10 @@ public class Saga implements SimpleSaga<SagaData> {
 
     private SagaDefinition<SagaData> sagaDefinition = step().invokeParticipant(this::actionOrder)
         .onReply(OrderCreatedReply.class, this::onReplayOrder)
-        .onReply(Success.class, (a, b) -> logger.info("order replied")).withCompensation(this::compensationOrder)
+        .onReply(Success.class, (a, b) -> LOG.info("order replied")).withCompensation(this::compensationOrder)
         .step().withCompensation(this::compensationInventory).step().invokeParticipant(this::actionPayment)
-        .onReply(Success.class, (a, b) -> logger.info("payment replied")).step()
-        .invokeParticipant(this::actionInventory).onReply(Success.class, (a, b) -> logger.info("inventory replied"))
+        .onReply(Success.class, (a, b) -> LOG.info("payment replied")).step()
+        .invokeParticipant(this::actionInventory).onReply(Success.class, (a, b) -> LOG.info("inventory replied"))
         .build();
 
     /*
