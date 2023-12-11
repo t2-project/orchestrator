@@ -5,6 +5,7 @@ import de.unistuttgart.t2.common.saga.SagaData;
 import de.unistuttgart.t2.common.saga.commands.ActionCommand;
 import de.unistuttgart.t2.common.saga.commands.CompensationCommand;
 import de.unistuttgart.t2.common.saga.commands.SagaCommand;
+import de.unistuttgart.t2.orchestrator.gmt.GMTLogger;
 import io.eventuate.tram.commands.common.Success;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 import io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder;
@@ -12,6 +13,7 @@ import io.eventuate.tram.sagas.orchestration.SagaDefinition;
 import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Definition of the saga.
@@ -30,12 +32,37 @@ public class Saga implements SimpleSaga<SagaData> {
 
     private final Logger LOG = LoggerFactory.getLogger(Saga.class);
 
+    @Autowired
+    GMTLogger gmtLogger;
+
     @Override
     public SagaDefinition<SagaData> getSagaDefinition() {
         return this.sagaDefinition;
     }
 
-    private SagaDefinition<SagaData> sagaDefinition = step().invokeParticipant(this::actionOrder)
+    @Override
+    public void onStarting(String sagaId, SagaData sagaData) {
+        LOG.info("Saga {} for session {} started.", sagaId, sagaData.getSessionId());
+        gmtLogger.orderStart(sagaData.getSessionId());
+    }
+
+    @Override
+    public void onSagaCompletedSuccessfully(String sagaId, SagaData sagaData) {
+        LOG.info("Saga {} for session {} completed successfully.", sagaId, sagaData.getSessionId());
+        gmtLogger.orderComplete(sagaData.getSessionId());
+    }
+
+    @Override
+    public void onSagaRolledBack(String sagaId, SagaData sagaData) {
+        LOG.info("Saga {} for session {} rolled back.", sagaId, sagaData.getSessionId());
+    }
+
+    @Override
+    public void onSagaFailed(String sagaId, SagaData sagaData) {
+        LOG.warn("Saga {} for session {} failed.", sagaId, sagaData.getSessionId());
+    }
+
+    private final SagaDefinition<SagaData> sagaDefinition = step().invokeParticipant(this::actionOrder)
         .onReply(OrderCreatedReply.class, this::onReplayOrder)
         .onReply(Success.class, (a, b) -> LOG.info("order replied")).withCompensation(this::compensationOrder)
         .step().withCompensation(this::compensationInventory).step().invokeParticipant(this::actionPayment)
