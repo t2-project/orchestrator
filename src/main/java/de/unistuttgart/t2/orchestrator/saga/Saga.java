@@ -63,21 +63,21 @@ public class Saga implements SimpleSaga<SagaData> {
     }
 
     private final SagaDefinition<SagaData> sagaDefinition = step()
-        // Order action (create) + order compensation (reject)
+        // Step 1: define compensation 'cancel reservations'
+        .withCompensation(this::compensationInventory)
+
+        // Step 2: create order and define compensation 'reject order'
+        .step()
         .invokeParticipant(this::actionOrder)
         .onReply(OrderCreatedReply.class, this::onReplayOrder)
         .withCompensation(this::compensationOrder)
 
-        // Inventory compensation (cancel reservations)
-        .step()
-        .withCompensation(this::compensationInventory)
-
-        // Payment action (do payment)
+        // Step 3: do payment
         .step()
         .invokeParticipant(this::actionPayment)
         .onReply(Success.class, (a, b) -> LOG.info("payment replied"))
 
-        // // Inventory action (commit reservations)
+        // Step 4: commit reservations
         .step()
         .invokeParticipant(this::actionInventory)
         .onReply(Success.class, (a, b) -> LOG.info("inventory replied"))
