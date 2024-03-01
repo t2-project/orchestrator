@@ -19,7 +19,7 @@ With this, you place an order for the user "foo", with the given payment details
 If the orchestrator service successfully started a saga instance to handle the order, it returns the id of the saga instance.
 
 ```sh
-curl -i -X POST -H "Content-Type:application/json" -d '{"cardNumber":"num","cardOwner":"own","checksum":"sum", "sessionId":"foo", "total" : 42.0}' orchestrator-cs/order
+curl -i -X POST -H "Content-Type:application/json" -d '{"cardNumber":"num","cardOwner":"own","checksum":"sum", "sessionId":"foo", "total" : 42.0}' http://orchestrator/order
 ```
 
 ```plain
