@@ -15,7 +15,7 @@ public class GMTLogger {
 
     private final boolean gmtLoggingEnabled;
 
-    public GMTLogger(@Value("${t2.gmt-logging.enabled}") boolean gmtLoggingEnabled) {
+    public GMTLogger(@Value("${t2.gmt-logging.enabled:false}") boolean gmtLoggingEnabled) {
         this.gmtLoggingEnabled = gmtLoggingEnabled;
     }
 
